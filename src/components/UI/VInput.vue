@@ -2,7 +2,7 @@
   <label
     v-click-outside="() => (isOpenSelectList = false)"
     class="input"
-    :class="{ error: errorText || error }"
+    :class="{ error: errorText }"
   >
     <span class="placeholder">{{ $attrs.placeholder }}</span>
     <input
@@ -12,11 +12,11 @@
       @input="inputHanlder"
       @keyup="inputAsyncSelectHanlder"
     />
-    <p v-if="desc && !errorText && !error" class="desc">
+    <p v-if="desc && !errorText" class="desc">
       {{ desc }}
     </p>
-    <p v-if="error || errorText" class="error">
-      {{ errorText || error }}
+    <p v-if="errorText" class="error">
+      {{ errorText }}
     </p>
     <div v-if="selectList?.length > 0 && isOpenSelectList" class="select-list">
       <button
@@ -32,9 +32,18 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, toRef } from "vue";
 import { debounce } from "@/utils/helpers";
-const emit = defineEmits(["update:modelValue", "setError", "clearErrorText"]);
+import storageForm from "@/storageForm";
+const storageArea = storageForm("area");
+
+const emit = defineEmits([
+  "update:modelValue",
+  "setError",
+  "clearErrorText",
+  "setErrorText",
+  "setArea",
+]);
 
 const props = defineProps({
   modelValue: String,
@@ -42,11 +51,25 @@ const props = defineProps({
   desc: String,
   rules: Array,
   asyncSelector: Function,
+  selectorType: String,
 });
 
-const error = ref("");
 const selectList = ref([]);
 const isOpenSelectList = ref(false);
+
+const checkSetArea = (value) => {
+  if (props.selectorType === "area") {
+    storageArea.set(value);
+    emit("setArea", value);
+  }
+};
+
+const checkRemoveArea = (value) => {
+  if (props.selectorType === "area") {
+    storageArea.remove();
+    emit("setArea", "");
+  }
+};
 
 const validator = (value, rules) => {
   const errors = [];
@@ -65,17 +88,19 @@ const validator = (value, rules) => {
   });
 
   if (errors.length === 0) {
-    error.value = "";
+    emit("setErrorText", "");
     emit("setError", false);
+    checkSetArea(value);
     return;
   }
 
-  error.value = errors.at(-1);
+  checkRemoveArea(value);
+
+  emit("setErrorText", errors.at(-1));
   emit("setError", true);
 };
 
 const inputHanlder = (event) => {
-  emit("clearErrorText");
   isOpenSelectList.value = false;
 
   const value = event.target.value;
@@ -88,6 +113,7 @@ const inputHanlder = (event) => {
 };
 
 const selectItemHanlder = (value) => {
+  checkSetArea(value);
   validator(value, props.rules);
   emit("update:modelValue", value);
   isOpenSelectList.value = false;

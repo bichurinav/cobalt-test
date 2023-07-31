@@ -10,7 +10,7 @@
           :errorText="dataForm.inputName.errorText"
           :rules="[emptyValid]"
           @setError="(state) => (dataForm.inputName.isError = state)"
-          @clearErrorText="dataForm.inputName.errorText = ''"
+          @setErrorText="(value) => (dataForm.inputName.errorText = value)"
         />
         <VInput
           v-model="dataForm.inputCode.value"
@@ -19,7 +19,7 @@
           :errorText="dataForm.inputCode.errorText"
           :rules="[emptyValid]"
           @setError="(state) => (dataForm.inputCode.isError = state)"
-          @clearErrorText="dataForm.inputCode.errorText = ''"
+          @setErrorText="(value) => (dataForm.inputCode.errorText = value)"
         />
       </div>
     </div>
@@ -35,7 +35,7 @@
           :rules="[emptyValid]"
           :asyncSelector="AddressApi.getCountry.bind(AddressApi)"
           @setError="(state) => (dataForm.inputCountry.isError = state)"
-          @clearErrorText="dataForm.inputCountry.errorText = ''"
+          @setErrorText="(value) => (dataForm.inputCountry.errorText = value)"
         />
         <VInput
           v-model="dataForm.inputArea.value"
@@ -44,8 +44,10 @@
           :errorText="dataForm.inputArea.errorText"
           :rules="[emptyValid]"
           :asyncSelector="AddressApi.getArea.bind(AddressApi)"
+          selectorType="area"
+          @setArea="(value) => (AddressApi.area = value)"
           @setError="(state) => (dataForm.inputArea.isError = state)"
-          @clearErrorText="dataForm.inputArea.errorText = ''"
+          @setErrorText="(value) => (dataForm.inputArea.errorText = value)"
         />
         <VInput
           v-model="dataForm.inputCity.value"
@@ -55,7 +57,7 @@
           :rules="[emptyValid]"
           :asyncSelector="AddressApi.getCity.bind(AddressApi)"
           @setError="(state) => (dataForm.inputCity.isError = state)"
-          @clearErrorText="dataForm.inputCity.errorText = ''"
+          @setErrorText="(value) => (dataForm.inputCity.errorText = value)"
         />
         <VInput
           v-model="dataForm.inputStreet.value"
@@ -65,7 +67,7 @@
           :rules="[emptyValid]"
           :asyncSelector="AddressApi.getStreet.bind(AddressApi)"
           @setError="(state) => (dataForm.inputStreet.isError = state)"
-          @clearErrorText="dataForm.inputStreet.errorText = ''"
+          @setErrorText="(value) => (dataForm.inputStreet.errorText = value)"
         />
         <div class="row">
           <VInput
@@ -73,10 +75,10 @@
             class="row__item"
             type="text"
             placeholder="Дом"
-            :errorText="dataForm.inputStreet.errorText"
+            :errorText="dataForm.inputHouse.errorText"
             :rules="[emptyValid]"
             @setError="(state) => (dataForm.inputHouse.isError = state)"
-            @clearErrorText="dataForm.inputHouse.errorText = ''"
+            @setErrorText="(value) => (dataForm.inputHouse.errorText = value)"
           />
           <VInput
             v-model="dataForm.inputHouseFrame.value"
@@ -86,7 +88,9 @@
             :errorText="dataForm.inputHouseFrame.errorText"
             :rules="[]"
             @setError="(state) => (dataForm.inputHouseFrame.isError = state)"
-            @clearErrorText="dataForm.inputHouseFrame.errorText = ''"
+            @setErrorText="
+              (value) => (dataForm.inputHouseFrame.errorText = value)
+            "
           />
         </div>
         <div class="input-index">
@@ -97,7 +101,7 @@
             :errorText="dataForm.inputIndex.errorText"
             :rules="[numsValid, indexValid]"
             @setError="(state) => (dataForm.inputIndex.isError = state)"
-            @clearErrorText="dataForm.inputIndex.errorText = ''"
+            @setErrorText="(value) => (dataForm.inputIndex.errorText = value)"
           />
         </div>
       </div>
@@ -245,6 +249,8 @@ const saveDataHandler = () => {
 onMounted(() => {
   if (storage.get()) {
     isAccessCancel.value = true;
+    const inputAreaValue = storage.get().inputArea.value;
+    AddressApi.area = inputAreaValue;
   }
 });
 </script>

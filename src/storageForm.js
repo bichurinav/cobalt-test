@@ -9,7 +9,7 @@ const storageForm = (key) => {
       localStorage.setItem(key, JSON.stringify(formData));
     },
     remove() {
-      localStorage.setItem("formData", "");
+      localStorage.setItem(key, "");
     },
   };
 };
