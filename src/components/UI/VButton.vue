@@ -1,5 +1,5 @@
 <template>
-  <button class="c-button" :class="classesRoot" @click="clickHandler">
+  <button class="v-button" :class="classesRoot" @click="clickHandler">
     <slot />
   </button>
 </template>
@@ -42,14 +42,14 @@ const clickHandler = () => {
 
 <style lang="scss" scoped>
 @import "@/assets/styles/_vars.scss";
-.c-button {
+.v-button {
   background: $bgPrimary;
+  min-width: 452px;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 256px;
-  padding: 0 20px;
-  height: 64px;
+  padding: 24px;
+  height: 72px;
   border-radius: 8px;
   padding: 0 12px;
   letter-spacing: -0.48px;

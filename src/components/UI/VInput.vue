@@ -110,6 +110,7 @@ const inputAsyncSelectHanlder = debounce(async () => {
   display: inline-flex;
   flex-direction: column;
   position: relative;
+  height: 64px;
 
   input {
     border: none;

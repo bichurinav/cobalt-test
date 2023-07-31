@@ -70,9 +70,9 @@ export default {
 
 <style lang="scss" scoped>
 .main-page {
-  .breadcrumbs {
-    margin: 16px 0;
-  }
+  // .breadcrumbs {
+  //   margin: 16px 0;
+  // }
 
   .header {
     margin: 96px 0;

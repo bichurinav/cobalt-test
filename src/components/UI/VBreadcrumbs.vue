@@ -118,6 +118,7 @@ const lastPages = computed(() => {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  height: 56px;
 
   &__link,
   &__item {

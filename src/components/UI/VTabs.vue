@@ -47,7 +47,7 @@ const tabSelectHandler = (tab) => {
     position: relative;
     display: flex;
     align-items: center;
-    padding: 0 24px;
+    padding: 16px 24px;
     min-height: 56px;
     background: #fff;
     border: 1px solid $colorGray;
