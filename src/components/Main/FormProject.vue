@@ -8,16 +8,7 @@
           type="text"
           placeholder="Наименование"
           :errorText="dataForm.inputName.errorText"
-          :rules="[
-            {
-              error: 'Только кирилица (без пробелов)',
-              pattern: new RegExp(/^[а-я]+$/i),
-            },
-            {
-              error: 'Введите больше 4 символов и <= 25',
-              validator: (value) => value.length > 4 && value.length <= 12,
-            },
-          ]"
+          :rules="[emptyValid]"
           @setError="(state) => (dataForm.inputName.isError = state)"
           @clearErrorText="dataForm.inputName.errorText = ''"
         />
@@ -26,16 +17,7 @@
           type="text"
           placeholder="Шифр"
           :errorText="dataForm.inputCode.errorText"
-          :rules="[
-            {
-              error: 'Только цифры',
-              pattern: new RegExp(/^[0-9]+$/),
-            },
-            {
-              error: 'Введите больше 3 цифр и <= 5',
-              validator: (value) => value.length > 3 && value.length <= 5,
-            },
-          ]"
+          :rules="[emptyValid]"
           @setError="(state) => (dataForm.inputCode.isError = state)"
           @clearErrorText="dataForm.inputCode.errorText = ''"
         />
@@ -50,12 +32,7 @@
           type="text"
           placeholder="Страна"
           :errorText="dataForm.inputCountry.errorText"
-          :rules="[
-            {
-              error: 'Обязательно к заполнению',
-              validator: (value) => value !== '',
-            },
-          ]"
+          :rules="[emptyValid]"
           :asyncSelector="AddressApi.getCountry.bind(AddressApi)"
           @setError="(state) => (dataForm.inputCountry.isError = state)"
           @clearErrorText="dataForm.inputCountry.errorText = ''"
@@ -65,12 +42,7 @@
           type="text"
           placeholder="Область / Край"
           :errorText="dataForm.inputArea.errorText"
-          :rules="[
-            {
-              error: 'Обязательно к заполнению',
-              validator: (value) => value !== '',
-            },
-          ]"
+          :rules="[emptyValid]"
           :asyncSelector="AddressApi.getArea.bind(AddressApi)"
           @setError="(state) => (dataForm.inputArea.isError = state)"
           @clearErrorText="dataForm.inputArea.errorText = ''"
@@ -80,12 +52,7 @@
           type="text"
           placeholder="Населенный пункт"
           :errorText="dataForm.inputCity.errorText"
-          :rules="[
-            {
-              error: 'Обязательно к заполнению',
-              validator: (value) => value !== '',
-            },
-          ]"
+          :rules="[emptyValid]"
           :asyncSelector="AddressApi.getCity.bind(AddressApi)"
           @setError="(state) => (dataForm.inputCity.isError = state)"
           @clearErrorText="dataForm.inputCity.errorText = ''"
@@ -95,12 +62,7 @@
           type="text"
           placeholder="Улица / Проспект"
           :errorText="dataForm.inputStreet.errorText"
-          :rules="[
-            {
-              error: 'Обязательно к заполнению',
-              validator: (value) => value !== '',
-            },
-          ]"
+          :rules="[emptyValid]"
           :asyncSelector="AddressApi.getStreet.bind(AddressApi)"
           @setError="(state) => (dataForm.inputStreet.isError = state)"
           @clearErrorText="dataForm.inputStreet.errorText = ''"
@@ -112,12 +74,7 @@
             type="text"
             placeholder="Дом"
             :errorText="dataForm.inputStreet.errorText"
-            :rules="[
-              {
-                error: 'Обязательно к заполнению',
-                validator: (value) => value !== '',
-              },
-            ]"
+            :rules="[emptyValid]"
             @setError="(state) => (dataForm.inputHouse.isError = state)"
             @clearErrorText="dataForm.inputHouse.errorText = ''"
           />
@@ -138,16 +95,7 @@
             type="text"
             placeholder="Индекс"
             :errorText="dataForm.inputIndex.errorText"
-            :rules="[
-              {
-                error: 'Только цифры',
-                pattern: new RegExp(/^[0-9]+$/),
-              },
-              {
-                error: 'Введите 6 символов',
-                validator: (value) => value.length === 6,
-              },
-            ]"
+            :rules="[numsValid, indexValid]"
             @setError="(state) => (dataForm.inputIndex.isError = state)"
             @clearErrorText="dataForm.inputIndex.errorText = ''"
           />
@@ -177,10 +125,14 @@
 
 <script setup>
 import { ref, watch, onMounted } from "vue";
-import { debounce } from "@/utils";
+import { debounce } from "@/utils/helpers";
 import AddressApi from "@/services/modules/AddressApi";
+
+import { emptyValid, numsValid, indexValid } from "@/utils/validations";
+
 import storageForm from "@/storageForm";
 const storage = storageForm("formData");
+
 const isAccessCancel = ref(false);
 const isAccessSave = ref(false);
 const isShowingNotif = ref(false);

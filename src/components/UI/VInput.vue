@@ -33,7 +33,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { debounce } from "@/utils";
+import { debounce } from "@/utils/helpers";
 const emit = defineEmits(["update:modelValue", "setError", "clearErrorText"]);
 
 const props = defineProps({
