@@ -270,8 +270,9 @@ onMounted(() => {
 
     &__title {
       font-size: 32px;
-      height: 56px;
+      min-height: 56px;
       letter-spacing: -1.92px;
+      padding-bottom: 16px;
       border-bottom: 1px solid $colorSilver;
       font-weight: 500;
       @media (max-width: 991px) {
@@ -318,12 +319,12 @@ onMounted(() => {
     justify-content: flex-end;
     .button-group {
       margin-top: 16px;
-      width: auto;
+      width: 50%;
       display: inline-flex;
       align-items: center;
       column-gap: 16px;
       margin-bottom: 128px;
-      @media (max-width: 991px) {
+      @media (max-width: 767px) {
         width: 100%;
         column-gap: 6px;
         margin-bottom: 60px;

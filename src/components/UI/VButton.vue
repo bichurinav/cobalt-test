@@ -1,6 +1,8 @@
 <template>
   <button class="v-button" :class="classesRoot" @click="clickHandler">
-    <slot />
+    <span class="text">
+      <slot />
+    </span>
   </button>
 </template>
 
@@ -44,17 +46,21 @@ const clickHandler = () => {
 @import "@/assets/styles/_vars.scss";
 .v-button {
   background: $bgPrimary;
-  min-width: 452px;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 24px;
-  height: 72px;
+  min-height: 72px;
   border-radius: 8px;
-  padding: 0 12px;
   letter-spacing: -0.48px;
   color: #fff;
   transition: all 0.15s ease;
+
+  .text {
+    width: 100%;
+    padding: 24px;
+    line-height: 24px;
+  }
 
   &:hover {
     background: $bgPrimaryHover;

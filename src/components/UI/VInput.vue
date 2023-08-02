@@ -1,11 +1,12 @@
 <template>
   <label
     v-click-outside="() => (isOpenSelectList = false)"
-    class="input"
+    class="v-input"
     :class="{ error: errorText }"
   >
     <span class="placeholder">{{ $attrs.placeholder }}</span>
     <input
+      class="input"
       v-bind="$attrs"
       placeholder=""
       :value="modelValue"
@@ -131,19 +132,20 @@ const inputAsyncSelectHanlder = debounce(async () => {
 <style lang="scss" scoped>
 @import "@/assets/styles/_vars.scss";
 
-.input {
+.v-input {
   width: 100%;
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
   position: relative;
-  height: 64px;
 
-  input {
+  .input {
     border: none;
-    padding-bottom: 16px;
+    min-height: 24px;
+    padding: 8px 0 16px 0;
     border-bottom: 1px solid $colorSilver;
     transition: all 0.15s ease;
     letter-spacing: -0.48px;
+    line-height: 24px;
     font-weight: 500;
 
     &:focus {
@@ -171,7 +173,6 @@ const inputAsyncSelectHanlder = debounce(async () => {
 
   .placeholder {
     font-size: 14px;
-    margin-bottom: 8px;
     line-height: 16px;
     letter-spacing: -0.28px;
     color: $colorGray;

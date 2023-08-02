@@ -70,15 +70,12 @@ export default {
 
 <style lang="scss" scoped>
 .main-page {
-  // .breadcrumbs {
-  //   margin: 16px 0;
-  // }
-
   .header {
     margin: 96px 0;
 
     &__title {
       font-size: 64px;
+      line-height: 72px;
       letter-spacing: -5.12px;
       font-weight: 500;
       @media (max-width: 991px) {

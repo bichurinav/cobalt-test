@@ -118,7 +118,8 @@ const lastPages = computed(() => {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  height: 56px;
+  // padding: 16px 0;
+  min-height: 56px;
 
   &__link,
   &__item {
@@ -127,7 +128,8 @@ const lastPages = computed(() => {
     max-width: 240px;
     overflow: hidden;
     text-overflow: ellipsis;
-    padding-bottom: 1px;
+    // padding-bottom: 1px;
+    padding: 16px 0;
   }
 
   &__link {
