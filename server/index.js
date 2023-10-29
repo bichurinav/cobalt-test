@@ -1,17 +1,16 @@
-const express = require("express")
+const express = require("express");
 const fs = require("fs/promises");
 const path = require("path");
-const app = express()
-const port = 3000
+const app = express();
+const port = 3020;
 
 const dirname = path.resolve();
 
-
-app.use(express.static("dist"))
+app.use(express.static("dist"));
 
 app.use("*", async (_, res) => {
-  const html = await fs.readFile(path.join(dirname, "dist", "index.html"))
-  res.send(html)
-})
+  const html = await fs.readFile(path.join(dirname, "dist", "index.html"));
+  res.send(html);
+});
 
-app.listen(port)
+app.listen(port);
